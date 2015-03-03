@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
-//bug try  5,5,5,5,4,5,5 and 4 is not replaced with 5
 public class Part4 {
     int maxi;
-    int maxdiff;
     int count;
     int fin[]=new int[5];
     public static void main(String[] args) {
@@ -27,36 +25,22 @@ public class Part4 {
         }
         int k=Integer.parseInt(args[1]);
         Part4 n=new Part4();
-        System.out.println(n.number(arr, arr.length - 1, k));
+        System.out.println(n.number(arr, arr.length-1 , k));
     }
     public int number(int arr[],int n, int k) {
 
-        if(n==0)
+        if(n<0)
             return sum(fin);
-        for (int i = 0; i < fin.length ; i++) {
-            if(diff(arr[n],k)<=diff(fin[i],k)){
-                if(count==5)
-                {
-                    for (int j = 0; j <5 ; j++) {
-                        if(diff(fin[j],k)>=maxdiff){
-                            maxdiff=diff(fin[j],k);
-                            maxi=j;
-                        }
-                    }
-                    fin[maxi]=arr[n];
-                    maxdiff=0;
-                    maxi=0;
-                    break;
-                }
-                else
-                {
-                    fin[count]=arr[n];
-                    count++;
-                    break;
-                }
-            }
-
-
+        int l=0;
+        while(count<5){
+            fin[l]=arr[n];
+            n=n-1;
+            l=l+1;
+            count++;
+        }
+        maxi=maxdiff(fin,k);
+        if(diff(arr[n],k)<diff(fin[maxi],k)){
+            fin[maxi]=arr[n];
         }
         System.out.println(Arrays.toString(fin));
         return number(arr,n-1,k);
@@ -74,5 +58,16 @@ public class Part4 {
         else
             return b-a;
 
+    }
+    public int maxdiff(int a[],int k){
+        int max=0;
+        int index=-1;
+        for (int i = 0; i <a.length ; i++) {
+            if(diff(a[i],k)>max){
+                index=i;
+                max=diff(a[i],k);
+            }
+        }
+        return index;
     }
 }
