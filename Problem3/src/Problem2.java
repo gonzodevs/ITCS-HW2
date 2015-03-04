@@ -1,0 +1,93 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Problem3 {
+
+    int min_sum=99999;
+    Integer min_perm[];
+    int sorted_sum=9999;
+
+    public static void main(String[] args) {
+        long startTime = System.nanoTime();
+        Integer arr[]=new Integer[Integer.parseInt(args[0])];
+        try {
+            File file = new File("input.txt");
+            Scanner in = new Scanner(file);
+            for (int i = 0; i < arr.length; i++) {
+                if(in.hasNextLine()){
+                    arr[i]=(Integer.parseInt(in.next()));
+                }
+            }
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Problem3 n=new Problem3();
+        int b[]=new int[3];
+        n.permutation(arr, 0);
+        n.sort(arr);
+        long estimatedTime = System.nanoTime() - startTime;
+        System.out.println("the running time was:" +estimatedTime);
+    }
+
+    public void sort(Integer arr[]){
+        Arrays.sort(arr);
+        int cursum=0;
+        int sum=0;
+        for (int i = 0; i < arr.length; i++) {
+            if (i < 1) {
+                cursum = arr[i];
+            } else {
+                cursum = cursum + arr[i];
+            }
+            sum = cursum + sum;
+        }
+        sorted_sum=sum;
+        System.out.println("comparison of computations times between finding all permutation and sorting:");
+        System.out.println("Sorted array: "+Arrays.toString(arr)+" Sum:"+sorted_sum);
+        System.out.println("Permutation used: "+Arrays.toString(min_perm)+" Sum:"+min_sum);
+    }
+    public void permutation(Integer[] arr, int k)
+    {
+        int cursum=0;
+        int sum=0;
+
+        if (k == arr.length)
+        {
+            for (int i = 0; i < arr.length; i++)
+            {
+                if(i<1){
+                    cursum=arr[i];
+                }
+                else
+                {
+                    cursum=cursum+arr[i];
+                }
+                sum=cursum+sum;
+                System.out.print(arr[i]+" ");
+            }
+            if(sum<min_sum){
+                min_sum=sum;
+                min_perm=arr;
+            }
+            System.out.println();
+        }
+        else
+        {
+            for (int i = k; i < arr.length; i++)
+            {
+                int temp = arr[k];
+                arr[k] = arr[i];
+                arr[i] = temp;
+
+                permutation(arr, k + 1);
+                temp = arr[k];
+                arr[k] = arr[i];
+                arr[i] = temp;
+            }
+        }
+    }
+    }
+

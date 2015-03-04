@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //expect 2 command line arguments, N(number of items to be read from input.txt) and K(used to find congruence to 0 mod k)
 // I/O source http://stackoverflow.com/questions/2864117/read-data-from-a-text-file-using-java
-//bug sum is not looked for only numbers who % k==0?
+//source for running times: http://www.tutorialspoint.com/java/lang/system_nanotime.htm
 public class Part3 {
 
     ArrayList<Integer> end= new ArrayList();

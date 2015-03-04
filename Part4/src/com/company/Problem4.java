@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
-public class Part4 {
-    long startTime = System.nanoTime();
+public class Problem4 {
+
     int maxi;
     int count;
     int fin[]=new int[5];
     public static void main(String[] args) {
-        int arr[]=new int[Integer.parseInt(args[0])+1];
+        long startTime = System.nanoTime();
+        int arr[]=new int[Integer.parseInt(args[0])];
         try {
             File file = new File("input.txt");
             Scanner in = new Scanner(file);
@@ -24,14 +25,18 @@ public class Part4 {
             e.printStackTrace();
         }
         int k=Integer.parseInt(args[1]);
-        Part4 n=new Part4();
+        Problem4 n=new Problem4();
         System.out.println(n.number(arr, arr.length-1 , k));
-        System.out.println("the running time was:" +n.getEstimatedTime());
+        long estimatedTime = System.nanoTime() - startTime;
+        System.out.println("the running time was:" +estimatedTime);
     }
     public int number(int arr[],int n, int k) {
 
-        if(n<0)
+        if(n<0){
+            System.out.println(Arrays.toString(fin));
             return sum(fin);
+        }
+
         int l=0;
         while(count<5){
             fin[l]=arr[n];
@@ -40,10 +45,10 @@ public class Part4 {
             count++;
         }
         maxi=maxdiff(fin,k);
-        if(diff(arr[n],k)<diff(fin[maxi],k)){
+        if(n>=0&&diff(arr[n],k)<diff(fin[maxi],k)){
             fin[maxi]=arr[n];
         }
-        System.out.println(Arrays.toString(fin));
+
         //recurrence is O(n) as it will decrease n by 1 every run and when n==0 simply return the sum of fin which is O(n)
         return number(arr,n-1,k);
     }
@@ -75,8 +80,5 @@ public class Part4 {
         }
         return index;
     }
-    long estimatedTime = System.nanoTime() - startTime;
-    public long getEstimatedTime() {
-        return estimatedTime;
-    }
+
 }
