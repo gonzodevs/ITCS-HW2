@@ -2,48 +2,77 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-//expect 2 command line arguements, N(number of items to be read from input.txt) and K(used to find congruence to 0 mod k)
+//expect 2 command line arguments, N(number of items to be read from input.txt) and K(used to find congruence to 0 mod k)
 // I/O source http://stackoverflow.com/questions/2864117/read-data-from-a-text-file-using-java
 //bug sum is not looked for only numbers who % k==0?
 public class Part3 {
-    ArrayList end= new ArrayList();
+    long startTime = System.nanoTime();
+    ArrayList<Integer> end= new ArrayList();
     int count;
     public static void main(String[] args) {
         System.out.println("intialized");
-        int arr[]=new int[Integer.parseInt(args[0])+1];
+        ArrayList<Integer> arr=new ArrayList();
         try {
             File file = new File("input.txt");
             Scanner in = new Scanner(file);
-            for (int i = 0; i < arr.length; i++) {
+            for (int i = 0; i <= Integer.parseInt(args[0]); i++) {
                 if(in.hasNextLine()){
-                    arr[i]=Integer.parseInt(in.next());
+                    arr.add(in.nextInt());
                 }
             }
             in.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("to use"+arr);
         Part3 a=new Part3();
         int k=Integer.parseInt(args[1]);
         //should contain 4 values whose sum % k ==0
-       ArrayList value= a.congrutent(arr,k,arr.length-1);
-        if(a.getCount()<4){
+       ArrayList value= a.congrutent(arr,k,arr.size()-1);
+        if(value==null){
             System.out.println("no result");
         }
         else
             System.out.println("The 4 values whose sum is congruent to 0 mod "+k+" "+ value);
+        System.out.println("the running time was:" + a.getEstimatedTime());
 
     }
-    public  ArrayList congrutent(int arr[],int k, int n){
-        if(count==4 || n==0){
+    public  ArrayList congrutent(ArrayList<Integer> arr,int k, int n){
+        if(count==4 && n<0){
             return end;
         }
-
-        if(modk(arr[n],k)==true && addToList(arr[n])==true){
+        //if there are not 4 values who are modk true, then we have to search for additions whose sum might be congruent;
+        if(n<0 && count <4){
+            count=0;
+            end.clear();
+            return hcongruent(arr,k,arr.size()-1);
         }
+        if(modk(arr.get(n),k)==true && addToList(arr.get(n))==true){
+        }
+
         return congrutent(arr,k,n-1);
 
 
+    }
+    public ArrayList hcongruent(ArrayList<Integer> arr,int k,int n){
+        if(count!=4 && n<0)
+            return null;
+        if(count==4 && n<0)
+            return end;
+        else{
+        for (int i = 0; i < n-1 ; i++) {
+            if(modk(arr.get(i)+arr.get(n),k)==true){
+                end.add(arr.get(i));
+                end.add(arr.get(n));
+                arr.remove(i);
+                n=n-1;
+                arr.remove(n);
+                count=count+2;
+                break;
+            }
+        }
+        }
+        return hcongruent(arr,k,n-1);
     }
 
     boolean addToList(int a){
@@ -56,6 +85,7 @@ public class Part3 {
     }
 
     //determines if a value mod k ==0
+    //o(1)
     public boolean modk(int a,int k)
    {
         if(a%k==0)
@@ -63,8 +93,9 @@ public class Part3 {
         else
             return false;
     }
-    public  int getCount(){
-        return count;
+    long estimatedTime = System.nanoTime() - startTime;
+    public long getEstimatedTime() {
+        return estimatedTime;
     }
-
 }
+

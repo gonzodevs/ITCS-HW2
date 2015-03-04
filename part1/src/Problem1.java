@@ -2,7 +2,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 public class Problem1{
-// I/O source:http://stackoverflow.com/questions/2864117/read-data-from-a-text-file-using-java
+    long startTime = System.nanoTime();
+    // I/O source:http://stackoverflow.com/questions/2864117/read-data-from-a-text-file-using-java
+    //source for running times: http://www.tutorialspoint.com/java/lang/system_nanotime.htm
     public static void main(String[] args) {
         System.out.println("initialize");
         ArrayList a=new ArrayList();
@@ -19,12 +21,13 @@ public class Problem1{
             e.printStackTrace();
         }
         ArrayList b=new ArrayList();
-        //b.add(a.get(a.size()-1));
-        if((new Problem1()).twoPart(b, a, a.size()-1)){
+        Problem1 program=new Problem1();
+        if(program.twoPart(b, a, a.size()-1)){
             System.out.println("Problem solvable with groups above");
         }
         else
             System.out.println("not solvable");
+        System.out.println("the running time was:" +program.getEstimatedTime());
     }
     public boolean twoPart(ArrayList arr1,ArrayList arr2,int n){
         if(sum(arr1)==sum(arr2)){
@@ -60,5 +63,9 @@ public class Problem1{
         }
         return -1;
     }
+    long estimatedTime = System.nanoTime() - startTime;
 
+    public long getEstimatedTime() {
+        return estimatedTime;
+    }
 }
