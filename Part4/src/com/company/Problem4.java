@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 public class Problem4 {
 
-    int maxi;
     int count;
     int fin[]=new int[5];
     public static void main(String[] args) {
@@ -26,59 +25,55 @@ public class Problem4 {
         }
         int k=Integer.parseInt(args[1]);
         Problem4 n=new Problem4();
-        System.out.println(n.number(arr, arr.length-1 , k));
+        System.out.println("The sum of this array="+n.number(arr, arr.length-1 , k)+" and k="+k);
         long estimatedTime = System.nanoTime() - startTime;
         System.out.println("the running time was:" +estimatedTime);
     }
     public int number(int arr[],int n, int k) {
-
-        if(n<0){
-            System.out.println(Arrays.toString(fin));
-            return sum(fin);
+        System.out.println(Arrays.toString(arr));
+        fin[0]=arr[0];
+        fin[1]=arr[1];
+        fin[2]=arr[2];
+        fin[3]=arr[3];
+        fin[4]=arr[4];
+        int finSum=arr[0]+arr[1]+arr[2]+arr[3]+arr[4];
+        for (int i = 0; i < fin.length ; i++) {
+            finSum=finSum+fin[i];
         }
-
-        int l=0;
-        while(count<5){
-            fin[l]=arr[n];
-            n=n-1;
-            l=l+1;
-            count++;
-        }
-        maxi=maxdiff(fin,k);
-        if(n>=0&&diff(arr[n],k)<diff(fin[maxi],k)){
-            fin[maxi]=arr[n];
-        }
-
-        //recurrence is O(n) as it will decrease n by 1 every run and when n==0 simply return the sum of fin which is O(n)
-        return number(arr,n-1,k);
-    }
-    //O(n) however based on number() algorithm this will always be constant time as the size of (a) does not change)
-    public int sum(int a[]){
-        int tmp=0;
-        for (int i = 0; i < a.length ; i++) {
-           tmp=tmp+a[i];
-        }
-        return tmp;
-    }
-    //O(1) it takes constant time for this operations.
-    public int diff(int a,int b){
-        if(a-b>=0)
-            return a-b;
-        else
-            return b-a;
-
-    }
-    //O(n)however based on number() algorithm this will always be constant time as the size of (a) does not change)
-    public int maxdiff(int a[],int k){
-        int max=0;
-        int index=-1;
-        for (int i = 0; i <a.length ; i++) {
-            if(diff(a[i],k)>max){
-                index=i;
-                max=diff(a[i],k);
+        for (int i = 0; i <n ; i++) {
+            for (int j = i+1; j <n ; j++) {
+                for (int l = j+1; l <n ; l++) {
+                    for (int m = l+1; m <n ; m++) {
+                        for (int o = m+1; o <n ; o++) {
+                            int tmpsum=arr[i]+arr[j]+arr[l]+arr[m]+arr[o];
+                            if(tmpsum==k){
+                                fin[0]=arr[i];
+                                fin[1]=arr[j];
+                                fin[2]=arr[l];
+                                fin[3]=arr[m];
+                                fin[4]=arr[o];
+                                System.out.println("perfect match with the elements: " + Arrays.toString(fin));
+                                finSum=tmpsum;
+                                return finSum;
+                            }
+                            if(Math.abs(tmpsum-k)<=Math.abs(finSum-k)){
+                                fin[0]=arr[i];
+                                fin[1]=arr[j];
+                                fin[2]=arr[l];
+                                fin[3]=arr[m];
+                                fin[4]=arr[o];
+                                finSum=tmpsum;
+                            }
+                        }
+                    }
+                }
             }
         }
-        return index;
+        System.out.println(Arrays.toString(fin));
+        return finSum;
+
     }
+
+
 
 }
