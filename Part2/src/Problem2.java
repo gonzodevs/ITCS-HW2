@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Problem3 {
+public class Problem2 {
 
     int min_sum=99999;
     Integer min_perm[];
@@ -24,7 +24,7 @@ public class Problem3 {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Problem3 n=new Problem3();
+        Problem2 n=new Problem2();
         int b[]=new int[3];
         n.permutation(arr, 0);
         n.sort(arr);

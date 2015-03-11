@@ -5,7 +5,7 @@ import java.util.Scanner;
 //expect 2 command line arguments, N(number of items to be read from input.txt) and K(used to find congruence to 0 mod k)
 // I/O source http://stackoverflow.com/questions/2864117/read-data-from-a-text-file-using-java
 //bug sum is not looked for only numbers who % k==0?
-public class Part3 {
+public class Problem3 {
 
     ArrayList<Integer> end= new ArrayList();
     int count;
@@ -25,7 +25,7 @@ public class Part3 {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Part3 a=new Part3();
+        Problem3 a=new Problem3();
         int k=Integer.parseInt(args[1]);
         //should contain 4 values whose sum % k ==0
        ArrayList value= a.congrutent(arr,k,arr.size()-1);

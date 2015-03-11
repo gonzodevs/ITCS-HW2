@@ -29,17 +29,14 @@ public class Problem4 {
         long estimatedTime = System.nanoTime() - startTime;
         System.out.println("the running time was:" +estimatedTime);
     }
+
     public int number(int arr[],int n, int k) {
-        System.out.println(Arrays.toString(arr));
         fin[0]=arr[0];
         fin[1]=arr[1];
         fin[2]=arr[2];
         fin[3]=arr[3];
         fin[4]=arr[4];
         int finSum=arr[0]+arr[1]+arr[2]+arr[3]+arr[4];
-        for (int i = 0; i < fin.length ; i++) {
-            finSum=finSum+fin[i];
-        }
         for (int i = 0; i <n ; i++) {
             for (int j = i+1; j <n ; j++) {
                 for (int l = j+1; l <n ; l++) {
